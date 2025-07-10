@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz Game</title>
+  <link rel="stylesheet" href="design.css" />
+</head>
+<body> 
+  <audio id="wrongSound" src="incorrect.mp3" preload="auto"></audio> 
+  <audio id="correctSound" src="correct.mp3" preload="auto"></audio> 
+  <audio id="warning" src="alert.mp3" preload="auto"></audio> 
+  <audio id="fun" src="retro.mp3" preload="auto"></audio>
+  <div class="quiz-container">
+    <h1 id="greeting">Welcome to the Quiz!</h1>
+    <div class="quiz-box">
+      <div class="question-area">
+        <h2 id="question">Question will appear here</h2>
+        <h3 id="wait"></h3>
+      </div>
+      <div class="options">
+        <button id="option-btn">Option 1</button>
+        <button id="option-btn2">Option 2</button>
+        <button id="option-btn3">Option 3</button>
+        <button id="option-btn4">Option 4</button> 
+
+      </div>
+      <div class="quiz-footer">
+        <span id="score">Score: 0</span>
+        <span id="progress">0 / 10</span> 
+       <button id="volumeBtn" style="font-size: 1rem; cursor: pointer;">
+  🔊 unmute
+</button> 
+     
+     </button>
+      </div>
+      <button id="nextBtn">Next</button>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
