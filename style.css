@@ -84,4 +84,16 @@ button:hover {
 } 
 #apple {
   color: white;
+} 
+@media (max-width: 400px) {
+  .container {
+    width: 90%;
+    padding: 1rem;
+  }
+
+  input[type="text"],
+  button {
+    font-size: 0.9rem;
+  }
 }
+
