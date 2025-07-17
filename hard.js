@@ -28,7 +28,7 @@ let Currentqa = 0;
 let rd = random;   
 let Ismuted = true; 
 let tickp = false; 
-let clock = 15;
+let clock = 10;
    
     function time() {
          clearInterval(countdown); 
@@ -38,7 +38,12 @@ let clock = 15;
                  clock--;  
 
                  if(clock<0) {
-              clearInterval(countdown);
+              clearInterval(countdown); 
+              tick.pause();
+       beep.play();
+        tickp = true;
+        question.textContent = "Time's Up!" 
+     wait.textContent = questions[Currentqa].ans;  
          }
             },1000);
          } 
@@ -49,7 +54,8 @@ let clock = 15;
    
 
  bn.addEventListener("click", ()=>{
-       fun.play();
+       fun.play(); 
+       tick.play();
  })
 
 
@@ -89,14 +95,27 @@ let p = randomgen();
          wait.textContent = selected.ans;
       }
       hasAnswered = true; 
-      clearInterval(countdown);
-   } 
+      clearInterval(countdown); 
+      tick.play(); 
 
+      if(hasAnswered) {
+    btn.addEventListener("click", ()=>{
+         clock = 10;
+        time();
+    })
+    
+   }
+
+   } 
+      
+   
+   
     [one, two, three, four].forEach(button => {
          button.addEventListener("click", compareAns);
     })
      
     btn.addEventListener("click", ()=> {  
+        time();
         stage++; 
         level.textContent = `${stage}/10`
        one.style.background = "" 
@@ -137,3 +156,10 @@ let p = randomgen();
      displayQuestion(p); 
      console.log(p);
   } 
+
+
+    
+ 
+   
+
+ 
