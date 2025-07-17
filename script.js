@@ -17,12 +17,32 @@ const timer = document.getElementById("timer");
 const watch = document.getElementById("clock-emoji"); 
 const tick = document.getElementById("tick");  
 const beep = document.getElementById("beep"); 
+let point = 0; 
+let stage = 1;
 let fresh; 
 let selected;
 let hasAnswered = false;
 let q = generalQuestions; 
 let Currentqa = 0; 
 let rd = random;   
+let ticky = false;
+let clock = 12;  
+let countdown;
+
+  function timeflow() {
+        clearInterval(countdown); 
+        if(!ticky) {
+           countdown = setInterval(() => {
+             timer.textContent = clock; 
+             clock--;  
+             if(clock < 0) {
+               clearInterval(countdown); 
+               wait.textContent = "Time's up!" 
+               beep.play(); 
+             }
+           }, 1000);
+        }
+  }
 let p = randomgen(); 
  function randomgen() {
      random = Math.floor(Math.random() * q.length);  
@@ -32,20 +52,25 @@ let p = randomgen();
     
  } 
 
+
   function displayQuestion(p) { 
+   score.textContent = `${point}`; 
+   level.textContent = `${stage}/10`
      question.textContent = p.question; 
      one.textContent = p.options[0]; 
      two.textContent = p.options[1]; 
      three.textContent = p.options[2]; 
      four.textContent = p.options[3]; 
+     timeflow();
   }
       
    function compareAns(event) { 
-    event.preventDefault(); 
       selectedBtn = event.target; 
       if(selectedBtn.textContent === selected.correctAnswer) {
          selectedBtn.style.background = "green"; 
-         selectedBtn.style.color = "white";
+         selectedBtn.style.color = "white"; 
+         point++; 
+         score.textContent = `${point}`;
          correct.play();
       } else {
          selectedBtn.style.background = "red"; 
@@ -53,14 +78,27 @@ let p = randomgen();
          wrong.play();
          wait.textContent = selected.ans;
       }
-      hasAnswered = true;
-   } 
+      hasAnswered = true; 
+      clearInterval(countdown); 
+
+      if(hasAnswered) {
+         btn.addEventListener("click", ()=>{
+               clock = 12; 
+                stage++; 
+                level.textContent = `${stage}/10`;
+               timeflow();
+         })
+   }
+   }  
+
+   
 
     [one, two, three, four].forEach(button => {
          button.addEventListener("click", compareAns);
     })
      
     btn.addEventListener("click", ()=> {  
+      timeflow();
        one.style.background = "" 
        two.style.background = "" 
        three.style.background = "" 
@@ -74,17 +112,33 @@ let p = randomgen();
       if(!hasAnswered) {
          alert("Please select an answer before moving forward!")
       } else if(hasAnswered) {
-        if(Currentqa<hardQuestions.length) { 
+        if(Currentqa<generalQuestions.length) { 
            let fresh = randomgen();
            displayQuestion(fresh)
            console.log(fresh);
-     
-  } 
+         
+  }  else {
+         question.textContent = `Your score is ${point}`;
+    greeting.textContent = "Quiz Complete!"; 
+    level.textContent = "10/10";
+    [one, two, three, four].forEach(btn => {
+      btn.style.display = "none";
+    });
+    btn.disabled = true;
+  }
       }
 
+    }) 
+    bn.addEventListener("click", ()=> {
+          tick.play();
+          fun.play();
     })
 
   if(Currentqa<10) {
      displayQuestion(p); 
      console.log(p);
   } 
+
+      
+       
+     
